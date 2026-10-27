@@ -1,0 +1,135 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Design Sheet — {BRAND}</title>
+<!--
+  用法：複製一份 → 改 :root 的色票與 --font → 改元件裡的文字 → 用 Browser 開 file:// 截圖 → 當 image_references。
+  設計原則：這是「標本頁」不是「版面稿」。元件要大、要孤立、背景要素淨，
+  模型才抓得到字形與元件形狀。prompt 裡務必寫明「只抄字形與元件，不抄版面與背景」。
+  字體換成客戶字體時：@font-face 指到本機 ttf/otf，或用已安裝的字族名。
+  要壓縮黑體時可用 @font-face { src: local("HelveticaNeue-CondensedBlack"); } 叫到系統字（實測可行）。
+-->
+<style>
+:root{
+  /* ── 色票：每色一個角色名，改這裡就好 ───────────────── */
+  --accent:  #D1EF17;  /* ACCENT   強調字、底線、chip、品牌基底 */
+  --ink:     #14151B;  /* INK      深底、亮底上的字 */
+  --paper:   #F7F4EC;  /* PAPER    亮底、深底上的字 */
+  --second:  #6C2BFF;  /* SECOND   次要形狀、服裝 */
+  --alert:   #FF5A4E;  /* ALERT    塗鴉筆觸、警示 */
+  --muted:   #C2C3B4;  /* MUTED    未選取的清單項、小標 */
+
+  --font: "Inter", "Helvetica Neue", "PingFang TC", system-ui, sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;padding:48px 56px;background:var(--paper);color:var(--ink);font-family:var(--font);
+     -webkit-font-smoothing:antialiased}
+h1{font-size:13px;letter-spacing:.28em;text-transform:uppercase;font-weight:800;margin:0 0 4px}
+h2{font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:800;color:#8b8b82;
+   margin:44px 0 16px;border-top:1px solid rgba(20,21,27,.14);padding-top:12px}
+.sub{font-size:12px;color:#8b8b82;margin:0 0 8px}
+
+/* ── 色票 ───────────────────────────────────────────── */
+.sw{display:flex;gap:14px;flex-wrap:wrap}
+.sw div{width:158px}
+.sw .chip{height:78px;border-radius:10px;border:1px solid rgba(20,21,27,.12)}
+.sw b{display:block;font-size:13px;font-weight:800;margin-top:8px;letter-spacing:.02em}
+.sw span{display:block;font-size:11px;color:#8b8b82;font-variant-numeric:tabular-nums}
+
+/* ── 字級 ───────────────────────────────────────────── */
+.t-mega{font-size:76px;font-weight:900;letter-spacing:-.035em;line-height:.95;margin:0 0 6px}
+.t-head{font-size:42px;font-weight:900;letter-spacing:-.025em;line-height:1.02;margin:0 0 6px}
+.t-sub {font-size:20px;font-weight:700;letter-spacing:-.01em;margin:0 0 6px}
+.t-chip{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.spec{font-size:10px;color:#8b8b82;letter-spacing:.14em;text-transform:uppercase;margin:0 0 18px}
+
+/* ── 元件庫（prompt 裡用這些代號指名）────────────────── */
+.row{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin-bottom:26px}
+.label{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#8b8b82;width:118px;flex:none}
+
+.PILL{display:inline-block;background:var(--accent);color:var(--ink);font-weight:900;
+      font-size:19px;letter-spacing:.01em;padding:9px 22px;border-radius:999px}
+.BADGE{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;
+       background:var(--accent);border-radius:12px;font-size:24px;font-weight:900;color:var(--ink)}
+.UNDERLINE{position:relative;font-size:34px;font-weight:900;letter-spacing:-.02em}
+.UNDERLINE:after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:9px;
+       background:var(--accent);border-radius:999px}
+.STRIKE{position:relative;font-size:34px;font-weight:900;letter-spacing:-.02em}
+.STRIKE:after{content:"";position:absolute;left:-4px;right:-4px;top:52%;height:7px;background:var(--accent)}
+.OUTLINE{font-size:38px;font-weight:900;letter-spacing:-.02em;color:transparent;
+       -webkit-text-stroke:2.5px var(--ink)}
+.SWIPE{position:relative;font-size:inherit;font-weight:900;display:inline-block}
+.row .SWIPE{font-size:34px}
+.SWIPE:before{content:"";position:absolute;left:-6px;right:-6px;top:14%;bottom:10%;
+       background:var(--accent);z-index:-1;transform:skewX(-3deg)}
+.BRACKETS{position:relative;display:inline-block;padding:16px 26px;font-size:30px;font-weight:900}
+.BRACKETS i{position:absolute;width:20px;height:20px;border:4px solid var(--accent)}
+.BRACKETS i:nth-child(1){top:0;left:0;border-right:0;border-bottom:0}
+.BRACKETS i:nth-child(2){top:0;right:0;border-left:0;border-bottom:0}
+.BRACKETS i:nth-child(3){bottom:0;left:0;border-right:0;border-top:0}
+.BRACKETS i:nth-child(4){bottom:0;right:0;border-left:0;border-top:0}
+.CALLOUT{display:inline-block;text-align:left}
+.CALLOUT b{display:block;font-size:52px;font-weight:900;letter-spacing:-.03em;line-height:.9}
+.CALLOUT span{display:block;font-size:11px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;
+       color:#8b8b82;margin-top:6px}
+.TRACK{width:300px;height:24px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;display:flex}
+.TRACK i{display:block;height:100%}
+.dark{background:var(--ink);color:var(--paper);padding:26px 30px;border-radius:12px}
+.dark .OUTLINE{-webkit-text-stroke-color:var(--paper)}
+.rules{font-size:13px;line-height:1.8;margin:0;padding-left:20px}
+.rules b{font-weight:800}
+</style>
+
+<h1>{BRAND} — Motion Design Sheet</h1>
+<p class="sub">v1 · {DATE} · 給 image_references 用的元件標本頁</p>
+
+<h2>Palette (locked)</h2>
+<div class="sw">
+  <div><div class="chip" style="background:var(--accent)"></div><b>ACCENT</b><span>#D1EF17</span><span>強調字・底線・chip</span></div>
+  <div><div class="chip" style="background:var(--ink)"></div><b>INK</b><span>#14151B</span><span>深底・亮底字</span></div>
+  <div><div class="chip" style="background:var(--paper)"></div><b>PAPER</b><span>#F7F4EC</span><span>亮底・深底字</span></div>
+  <div><div class="chip" style="background:var(--second)"></div><b>SECOND</b><span>#6C2BFF</span><span>次要形狀</span></div>
+  <div><div class="chip" style="background:var(--alert)"></div><b>ALERT</b><span>#FF5A4E</span><span>塗鴉・警示</span></div>
+  <div><div class="chip" style="background:var(--muted)"></div><b>MUTED</b><span>#C2C3B4</span><span>未選取項</span></div>
+</div>
+
+<h2>Type scale — TYPE A</h2>
+<p class="t-mega">Higgs</p>
+<p class="spec">MEGA · 900 · cap height ≈ 12% frame height · tracking −.035em</p>
+<p class="t-head">Built different.</p>
+<p class="spec">HEADLINE · 900 · cap height ≈ 7% frame height</p>
+<p class="t-sub">Every gym. One pass.</p>
+<p class="spec">SUB · 700 · cap height ≈ 3.5% frame height</p>
+<p class="t-chip">Admissions open</p>
+<p class="spec">CHIP · 800 · uppercase · tracking .06em · cap height ≈ 2.5% frame height</p>
+
+<h2>Components</h2>
+<div class="row"><span class="label">PILL</span><span class="PILL">Try free — 7 days</span></div>
+<div class="row"><span class="label">BADGE</span><span class="BADGE">✓</span></div>
+<div class="row"><span class="label">UNDERLINE</span><span class="UNDERLINE">Launch</span></div>
+<div class="row"><span class="label">STRIKE</span><span class="STRIKE">Old way</span></div>
+<div class="row"><span class="label">OUTLINE TYPE</span><span class="OUTLINE">NEVER RECORDED</span></div>
+<div class="row"><span class="label">SWIPE</span><span class="SWIPE">different.</span></div>
+<div class="row"><span class="label">BRACKETS</span><span class="BRACKETS"><i></i><i></i><i></i><i></i>DOESN'T EXIST.</span></div>
+<div class="row"><span class="label">CALLOUT</span><span class="CALLOUT"><b>28,800</b><span>Beats per hour</span></span></div>
+<div class="row"><span class="label">TRACK 100%</span>
+  <span class="TRACK"><i style="width:50%;background:var(--second)"></i><i style="width:50%;background:var(--alert)"></i></span></div>
+<div class="row"><span class="label">TRACK 50%</span>
+  <span class="TRACK"><i style="width:50%;background:var(--second)"></i></span></div>
+
+<h2>On dark</h2>
+<div class="dark">
+  <p class="t-head" style="margin-bottom:14px">From lecture to <span class="SWIPE">launch.</span></p>
+  <span class="PILL">Apply in 4 minutes</span>
+  <span class="OUTLINE" style="margin-left:18px">INVENTED.</span>
+</div>
+
+<h2>Layout rules</h2>
+<ol class="rules">
+  <li>一行標題<b>只有一個</b>強調字上 ACCENT，其餘一律 INK 或 PAPER。</li>
+  <li>圖形元素只用<b>兩色</b>：ACCENT ＋ PAPER。INK 只出現在 PILL 內的字與 BADGE 內的勾。</li>
+  <li>9:16 安全區：上 12%、下 15% 不放關鍵資訊；wordmark 與 identity anchor 落在中央 73% 高度內。</li>
+  <li>字級一律以<b>畫面高度百分比</b>描述，不給 px。</li>
+  <li>一次只有<b>一個</b>元件在動；落定後 screen-locked，不抖不飄。</li>
+  <li>百分比 TRACK 的填色長度 ＝ 標示的百分比，第一幀就印好，永不動畫。</li>
+  <li>無漸層、無描邊（OUTLINE TYPE 除外）、無陰影、無光暈、無顆粒。</li>
+</ol>

@@ -1,0 +1,140 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Storyboard — {PROJECT}</title>
+<!--
+  用法：複製一份 → 改 :root 色票 → 每格填 img/秒數/旁白/動態註記 → Chrome headless 截圖給客戶：
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --disable-gpu \
+    --hide-scrollbars --window-size=1920,1600 --virtual-time-budget=15000 \
+    --screenshot=board.png "file:///絕對路徑/board-template.html"
+  這是 GATE B 的審圖板：管敘事與節奏，不管美術。圖可以醜，但四項資訊要齊：
+  構圖、秒數、旁白句、動態註記。缺秒數與動態註記的分鏡叫插畫，不叫分鏡。
+  60 秒填 10–12 格；15 秒填 7–9 格。
+  同一份也可以切成 styleframe 板：把 data-kind 改成 "style"，只放 2–3 格。
+-->
+<style>
+:root{
+  --ink:#14151B; --paper:#F7F4EC; --line:rgba(20,21,27,.14);
+  --muted:#8b8b82; --accent:#D1EF17; --alert:#FF5A4E;
+  --font:"Inter","Helvetica Neue","PingFang TC",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;padding:44px 52px;background:var(--paper);color:var(--ink);font-family:var(--font)}
+header{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;
+  border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:6px}
+h1{font-size:22px;font-weight:900;letter-spacing:-.02em;margin:0}
+.meta{font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;text-align:right;line-height:1.7}
+.gate{display:inline-block;background:var(--accent);color:var(--ink);font-size:10px;font-weight:900;
+  letter-spacing:.16em;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-bottom:8px}
+
+/* 總時長條：每格寬度 = 秒數佔比，一眼看出節奏是否平均 */
+.timeline{display:flex;gap:2px;height:26px;margin:18px 0 30px}
+.timeline div{background:var(--ink);color:var(--paper);font-size:10px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;border-radius:3px}
+.timeline div.hold{background:var(--accent);color:var(--ink)}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px 22px}
+.cell{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;
+  display:flex;flex-direction:column}
+.cell .num{position:absolute;margin:8px;background:var(--ink);color:var(--paper);
+  font-size:11px;font-weight:900;padding:3px 8px;border-radius:4px}
+.cell .shot{position:relative;aspect-ratio:16/9;background:#e9e7df;
+  display:flex;align-items:center;justify-content:center;overflow:hidden}
+.cell .shot img{width:100%;height:100%;object-fit:cover;display:block}
+.cell .shot .placeholder{font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.cell .body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.cell .tc{font-size:10px;font-weight:800;letter-spacing:.1em;color:var(--muted);
+  font-variant-numeric:tabular-nums}
+.cell .vo{font-size:13px;line-height:1.55;font-weight:600}
+.cell .vo:before{content:"VO ";font-size:9px;font-weight:900;letter-spacing:.16em;
+  color:var(--muted);vertical-align:2px}
+.cell .vo.silent{color:var(--muted);font-weight:500;font-style:italic}
+.cell .motion{font-size:12px;line-height:1.55;color:#4a4a44;border-top:1px dashed var(--line);padding-top:8px}
+.cell .motion:before{content:"MOTION ";font-size:9px;font-weight:900;letter-spacing:.16em;
+  color:var(--muted)}
+.cell .onscreen{font-size:12px;font-weight:800}
+.cell .onscreen:before{content:"ON SCREEN ";font-size:9px;font-weight:900;letter-spacing:.16em;
+  color:var(--muted)}
+.cell .onscreen em{font-style:normal;background:var(--accent);padding:0 3px;border-radius:2px}
+.flag{font-size:11px;font-weight:800;color:var(--alert)}
+
+/* styleframe 模式：兩欄大圖 */
+body[data-kind="style"] .grid{grid-template-columns:repeat(2,1fr)}
+body[data-kind="style"] .timeline{display:none}
+
+footer{margin-top:34px;border-top:1px solid var(--line);padding-top:16px;
+  font-size:12px;line-height:1.85;color:#4a4a44}
+footer b{font-weight:800;color:var(--ink)}
+</style>
+
+<body data-kind="board">
+
+<header>
+  <div>
+    <span class="gate">Gate B · storyboard</span>
+    <h1>{PROJECT} — {型態} · {秒數}s · {比例}</h1>
+  </div>
+  <div class="meta">
+    v1 · {DATE}<br>
+    核心機制：{一句話}<br>
+    identity anchor：{那一個特徵}
+  </div>
+</header>
+
+<!-- 每格寬度用 flex 比例＝秒數，一眼看出節奏。純停住的空拍加 class="hold" -->
+<div class="timeline">
+  <div style="flex:1.8">1.8s</div>
+  <div style="flex:1.8">1.8s</div>
+  <div style="flex:1.8">1.8s</div>
+  <div style="flex:1.8">1.8s</div>
+  <div style="flex:1.0" class="hold">HOLD 1.0s</div>
+  <div style="flex:1.8">1.8s</div>
+  <div style="flex:2.4">2.4s</div>
+  <div style="flex:2.6">定版 2.6s</div>
+</div>
+
+<div class="grid">
+
+  <div class="cell">
+    <span class="num">01</span>
+    <!-- 有圖時換成 <img src="board/shot1.png" alt=""> -->
+    <div class="shot"><span class="placeholder">shot 1</span></div>
+    <div class="body">
+      <div class="tc">0.0 – 1.8s · 1.8s</div>
+      <div class="vo">開場鉤子那一句旁白，逐字寫，不要摘要。</div>
+      <div class="onscreen">「<em>標題</em>第一句」</div>
+      <div class="motion">主角從畫面下方升起，慢動作；2D 星芒在輪廓邊 stagger 40ms 彈出。</div>
+    </div>
+  </div>
+
+  <div class="cell">
+    <span class="num">02</span>
+    <div class="shot"><span class="placeholder">shot 2</span></div>
+    <div class="body">
+      <div class="tc">1.8 – 3.6s · 1.8s</div>
+      <div class="vo silent">（全靜音，此格無旁白）</div>
+      <div class="onscreen">「8 個學院，1 道門」</div>
+      <div class="motion">攝影機 30° 環繞；角色群沿畫面底緣走出，每人延遲 60ms。</div>
+    </div>
+  </div>
+
+  <div class="cell">
+    <span class="num">03</span>
+    <div class="shot"><span class="placeholder">shot 3</span></div>
+    <div class="body">
+      <div class="tc">3.6 – 5.4s · 1.8s</div>
+      <div class="vo">第三句旁白。</div>
+      <div class="onscreen">—</div>
+      <div class="motion">形狀對位剪接：上一格的三角形接這格的箭頭，動量不中斷。</div>
+      <div class="flag">⚠ 這格沒有字，是動作插入鏡（全片需要的呼吸點）</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <b>GATE B 要簽的是「這個故事這樣說對不對」，不是美術。</b><br>
+  審查重點：① 敘事順序合理嗎 ② 節奏條有沒有太平均（全部同寬＝沒有重點）
+  ③ 有沒有至少一個純停住的空拍 ④ 每句畫面文字都在 4–7 字（中文 6–10 字）以內
+  ⑤ 旁白句加起來唸得完嗎（60 秒約 150 英文字／200–240 中文字）。<br>
+  <b>簽核後才進 styleframe（GATE C 前置）。</b>本板含兩輪修改。
+</footer>
