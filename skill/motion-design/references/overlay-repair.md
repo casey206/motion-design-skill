@@ -21,7 +21,7 @@ AI 影片模型算出來的 2D vector 動畫，**文字與版面一定會有缺�
 | **`gemini-omni-1.1-flash`（Omni Flash）** | **扁平 2D vector 的第一選擇** | 形狀完整、不亂加東西、中文字穩、角色不亂飛。**但雲端排隊可能 30 分鐘以上**（進度條卡在 5–35%），趕時間不能等 |
 | `veo-3.1-fast-generate-preview` | 趕時間、要 1–3 分鐘出片 | 動態照 beat 走得準，但**愛自己加東西**：爆星、白色碎片、速度線、憑空的圖示；中文字 3 秒後開始崩 |
 | `banaverse-h3` | 兩者都不行時 | 排隊 20 分鐘以上都停在 2%，實務上等於不可用 |
-| `minimax_h3`（Higgsfield） | 有 credits 時 | 唯一吃 `start_image`／`end_image`／`image_references` 的，一致性最好 |
+| `minimax_h3`（主力影片平台） | 有 credits 時 | 唯一吃 `start_image`／`end_image`／`image_references` 的，一致性最好 |
 
 **成本**：Banaverse 這條線若是 admin 帳號**全部免扣點**，可以放心重生；一般帳號重生前先估點數。
 

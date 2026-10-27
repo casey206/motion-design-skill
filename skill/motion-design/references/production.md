@@ -15,7 +15,7 @@
 | 只有客戶網址、不想寫 prompt | `marketing_studio_v2_create` ＋ `preset_type: saas_motion` ＋ `brand_url` | ≈ 90 credits |
 | 速度優先、畫質可讓 | `minimax_h3_max`（480p／768p） | 先 `get_cost` 查 |
 | 要精準相機路徑與可量的尺寸 | `scene_builder_3d_*` 或 Blender MCP 出幾何，再交 H3 | 另計 |
-| **Higgsfield 沒點時的備援** | Banaverse `banaverse_generate_video`，`model:"banaverse-h3"` | **admin 免扣點** |
+| **主力平台沒點時的備援** | Banaverse `banaverse_generate_video`，`model:"banaverse-h3"` | **admin 免扣點** |
 
 **Marketing Studio 所有 motion 型別都是 5.94 credits/秒**（hypermotion／2d_motion／saas_motion／mixed_media 與 H3 相容列都一樣），固定費差在 0.1–1.4。它貴不是費率問題，是 H3 直接跑有固定價。
 
@@ -55,9 +55,9 @@ this prompt.
 
 模型會自己收斂到那張，片尾的字就不會錯。
 
-## §2.5 備援：Banaverse H3（Higgsfield 沒點時）
+## §2.5 備援：Banaverse H3（主力平台沒點時）
 
-2026-09-11 實測，Higgsfield 額度用完會回「Out of credits on ultra plan」，`generate_image_batch` 逐項回 `submission_failed`（已送出的照跑，**不要重送同一批**）。此時全線改 Banaverse。
+2026-09-11 實測，主力平台額度用完會回「Out of credits」，`generate_image_batch` 逐項回 `submission_failed`（已送出的照跑，**不要重送同一批**）。此時全線改 Banaverse。
 
 ```
 banaverse_generate_video:
@@ -70,7 +70,7 @@ banaverse_generate_video:
 
 **與 H3 直跑的差異**（這些要事先知道，不然會期待落空）：
 
-| | Higgsfield `minimax_h3` | Banaverse `banaverse-h3` |
+| | 主力平台 `minimax_h3` | Banaverse `banaverse-h3` |
 |---|---|---|
 | `end_image` | 有 | **沒有** |
 | design sheet 當 `image_references` | 有 | **沒有**（只能用 `refs` 當首幀） |

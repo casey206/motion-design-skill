@@ -8,7 +8,7 @@
 
 ## ⚠ 與 seedance skill 的關鍵差異
 
-| | `higgsfield-seedance-prompt`（實拍寫真） | 本 skill（動態設計） |
+| | 實拍類 Seedance prompt skill（實拍寫真） | 本 skill（動態設計） |
 |---|---|---|
 | 負面敘述 | **禁止**，一律正向 | **必要**。RENDER 的禁用清單是壓掉「AI 油膩感」的唯一工具 |
 | 開頭 | 開在 SCENE CONTEXT，風格分散在各區塊 | **開在格式行＋風格定義**（動態設計的風格是全片統一的，不分散） |

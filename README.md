@@ -50,7 +50,7 @@ Claude 會先判型、問清楚素材，再依序交出 storyboard → stylefram
 | 項目 | 用途 | 必要性 |
 |---|---|---|
 | Claude Code | 執行 skill | 必要 |
-| 影像生成 MCP（Banaverse 或 Higgsfield） | 分鏡、styleframe 生圖；影片生成（MiniMax H3／Veo 等） | 必要（擇一） |
+| 影像生成 MCP（如 Banaverse） | 分鏡、styleframe 生圖；影片生成（MiniMax H3／Veo 等） | 必要 |
 | ffmpeg | animatic、抽幀 QA、合成 | 必要 |
 | Python 3＋Pillow | 字卡與 logo 後製 | 必要 |
 | Google Chrome | 把 HTML 設計規範表截成圖 | 建議 |

@@ -1,6 +1,6 @@
 ---
 name: motion-design
-description: 製作 3D／2D 動態設計影片（motion graphics）的完整產線。六種可賣型態：SaaS 上市片、實拍加動態字卡、Hyper-Motion 產品片、3D 建築／房地產動畫、2D Explainer 說明動畫、編輯式資訊圖表片。走業界三道關卡（storyboard 定敘事 → styleframe 定畫風 → animatic 定時間），用具體的緩動與 frame count 寫 prompt，minimax_h3 生成，抽幀 QA，文字與 logo 後製。只要使用者說做動態設計、motion graphics、motion design、動畫、3D 動畫、2D 動畫、上市影片 launch video、產品動態廣告、hyper motion、建築動畫、房地產動畫、飛越動畫 flythrough、explainer 說明動畫、kinetic typography 動態文字、資訊圖表影片、logo 動畫、片頭片尾、動態字卡、motion 品牌規範，或丟一個產品／網址／建築渲圖要變成動態影片，都用這個 skill。改 prompt 文案手感時配 minimax-h3-motion-design；寫實拍分鏡時配 higgsfield-seedance-prompt。
+description: 製作 3D／2D 動態設計影片（motion graphics）的完整產線。六種可賣型態：SaaS 上市片、實拍加動態字卡、Hyper-Motion 產品片、3D 建築／房地產動畫、2D Explainer 說明動畫、編輯式資訊圖表片。走業界三道關卡（storyboard 定敘事 → styleframe 定畫風 → animatic 定時間），用具體的緩動與 frame count 寫 prompt，minimax_h3 生成，抽幀 QA，文字與 logo 後製。只要使用者說做動態設計、motion graphics、motion design、動畫、3D 動畫、2D 動畫、上市影片 launch video、產品動態廣告、hyper motion、建築動畫、房地產動畫、飛越動畫 flythrough、explainer 說明動畫、kinetic typography 動態文字、資訊圖表影片、logo 動畫、片頭片尾、動態字卡、motion 品牌規範，或丟一個產品／網址／建築渲圖要變成動態影片，都用這個 skill。改 prompt 文案手感時配 minimax-h3-motion-design；寫實拍分鏡時配實拍類 Seedance prompt skill。
 ---
 
 # 3D／2D 動態設計產線
@@ -31,13 +31,12 @@ description: 製作 3D／2D 動態設計影片（motion graphics）的完整產�
 | Studio 四種 motion 型別 | `hypermotion`（format `hypermotion`）、`2d_motion`（`2d-product-motion`）、`saas_motion`（`saas`，吃 brand_url、不吃產品圖）、`mixed_media`（`mixed-media`） |
 | **扁平 2D vector 的首選影片模型** | **Banaverse `gemini-omni-1.1-flash`（Omni Flash）**，admin 免扣點。形狀完整、不亂加東西、中文字穩、角色不亂飛。**代價是雲端排隊可能 30 分鐘以上**（進度卡在 5–35%）→ 全部先送出，同時用 Veo Fast 跑備案 |
 | 趕時間的備案 | `veo-3.1-fast-generate-preview`（免扣點、8 秒上限、1–3 分鐘完成）。動態準，但**愛自己加爆星／白碎片／速度線／憑空圖示**，中文字 3 秒後開始崩 → 一定要配修片層 |
-| 分鏡／styleframe 生圖 | Banaverse `gemini-3-pro-image`（Nano Banana Pro），admin 帳號**免扣點**（一般帳號依方案計點）。Higgsfield credits 才會扣 |
+| 分鏡／styleframe 生圖 | Banaverse `gemini-3-pro-image`（Nano Banana Pro），admin 帳號**免扣點**（一般帳號依方案計點） |
 | 看影片 | Read 看不到 mp4 → `ffmpeg -vf "fps=1,tile=4x4"` 抽縮圖總表再 Read |
 | PIL / 字型 | 只有 `/usr/bin/python3` 有 PIL；中文用 `/System/Library/Fonts/STHeiti Medium.ttc` |
 | HTML 截圖 | **首選 Chrome headless**（2026-09-11 實測一次成功、免 server、免上傳）：`"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --disable-gpu --hide-scrollbars --window-size=1920,1080 --virtual-time-budget=15000 --screenshot=sheet.png "file:///絕對路徑/sheet.html"`（Google Fonts 的 link 也載得到）。備用：Playwright 擋 `file://`、in-app Browser 對本機檔不給截圖 → 先開本機 http server 再 navigate 截圖 |
 | Banaverse MCP 的 refs | 只吃 data URL／base64／**Banaverse 自己回傳的 url**；本機檔要走 `scripts/banaverse.py` 但它需要 `BANAVERSE_API_KEY`。**實務解法：hero 鏡純文字生，拿它回傳的 url 當其餘所有格與影片的 refs**，不必 base64 |
-| 影片備援（Higgsfield 沒點時） | Banaverse `banaverse-h3`（Motion H3，66 點，admin 免扣）：`banaverse_generate_video` 吃 `refs`（分鏡圖當首幀）、`durationSec` 4–15、`generateAudio:false`，回 jobId 後 `banaverse_get_video` 取件。**實測 2026-09-11 雲端排隊 20 分鐘以上都停在 2%**，不是 1–3 分鐘；送出後去做旁白與後製腳本，不要空等。`banaverse-h3-local` 零點但主機常離線，先試 local 失敗再切雲端 |
-| Higgsfield 額度 | 2026-09-11 用完（「Out of credits on ultra plan」）；`generate_image_batch` 逐項回 `submission_failed`，已送出的照跑。沒點時全線改 Banaverse |
+| 影片備援（主力平台沒點時） | Banaverse `banaverse-h3`（Motion H3，66 點，admin 免扣）：`banaverse_generate_video` 吃 `refs`（分鏡圖當首幀）、`durationSec` 4–15、`generateAudio:false`，回 jobId 後 `banaverse_get_video` 取件。**實測 2026-09-11 雲端排隊 20 分鐘以上都停在 2%**，不是 1–3 分鐘；送出後去做旁白與後製腳本，不要空等。`banaverse-h3-local` 零點但主機常離線，先試 local 失敗再切雲端 |
 | 產出放哪 | 客戶專案已有資料夾就放它底下（如 `<專案>/06_motion/{design,storyboard_v3,prompt,vo,out}`），否則 `./motion-projects/<專案名>/{ref,board,style,prompt,out}` |
 
 ---
@@ -172,7 +171,7 @@ ffmpeg -f concat -safe 0 -i frames.txt -i scratch_vo.mp3 -shortest -pix_fmt yuv4
 - **COPY LIST 是合約**，結尾必須有 `exact strings, nothing else appears in frame`。
 - **禁用清單要具體**：不要寫「乾淨的畫面」，要寫 `no grain, no vignette, no lens flare, no floating bokeh circles, no chromatic aberration, no watermark`。
 
-**注意與 seedance skill 的差異**：`higgsfield-seedance-prompt` 要求純正向敘述，那是實拍寫真的規則。**動態設計相反——禁用清單是必要的**，因為這個型態的敵人是「AI 預設的油膩感」，只能靠明確禁令壓掉。
+**注意與 seedance skill 的差異**：實拍類 Seedance prompt skill 要求純正向敘述，那是實拍寫真的規則。**動態設計相反——禁用清單是必要的**，因為這個型態的敵人是「AI 預設的油膩感」，只能靠明確禁令壓掉。
 
 ### 階段 6：生成
 
@@ -187,7 +186,7 @@ medias: [{role:"image_references", value:<design sheet>},
 - 本機／附檔素材先 `media_upload_widget`（那一個 turn 只能呼叫這一個工具）。
 - 2–4 個同 prompt 變體用 `count`；多支不同 prompt 用 `generate_video_batch` ＋ `jobs_wait`。
 - 超過 15 秒分段，切點只落在自然接縫，細節見 `references/production.md` §4。
-- **Higgsfield 沒點時走 Banaverse H3**（免上傳、免 media_id）：每個 block 一次 `banaverse_generate_video`，`model:"banaverse-h3"`（先試 `banaverse-h3-local`，回「主機離線」再切），`refs:[該 block 分鏡的 Banaverse url]`，`durationSec:10`，`generateAudio:false`，prompt = 12 區塊全文＋該 block 的 BEAT SHEET＋COPY LIST。多段一次全部送出再輪流 `banaverse_get_video`。限制：沒有 end_image、沒有 design sheet 當 image_references，每段一致性靠「分鏡首幀＋一致性重述」撐。
+- **主力平台沒點時走 Banaverse H3**（免上傳、免 media_id）：每個 block 一次 `banaverse_generate_video`，`model:"banaverse-h3"`（先試 `banaverse-h3-local`，回「主機離線」再切），`refs:[該 block 分鏡的 Banaverse url]`，`durationSec:10`，`generateAudio:false`，prompt = 12 區塊全文＋該 block 的 BEAT SHEET＋COPY LIST。多段一次全部送出再輪流 `banaverse_get_video`。限制：沒有 end_image、沒有 design sheet 當 image_references，每段一致性靠「分鏡首幀＋一致性重述」撐。
 #### 扁平 2D vector：模型選擇與防呆 prompt
 
 **`references/overlay-repair.md` 是這一段的完整版，動手前先讀。** 摘要：
@@ -267,7 +266,7 @@ AI 輸出是**素材**，不是成片。固定五道後製：
 | 分鏡「很漂亮但不像 motion」，每格像插畫海報 | 字太小、道具太多、背景畫場景 | 回階段 0.5：整格換色、標題 40–60%、一格 1–2 個道具、一個 through-line 物件 |
 | AI edit 修一個錯長出另一個錯 | 用生成模型做數量／位置修正 | 數量、位置、蓋掉多餘物件一律 PIL；生成模型只負責「重畫整格」 |
 | 角色跨格漂移（帽子、髮型、性別） | refs 只給一次、prompt 沒逐項描述 | 每格都帶 hero url＋STYLE KEY 句型逐項列外觀＋否定句 |
-| Higgsfield batch 一半 submission_failed | 額度用完 | 已送出的照收，其餘切 Banaverse；不要重送同一批 |
+| 主力平台 batch 一半 submission_failed | 額度用完 | 已送出的照收，其餘切 Banaverse；不要重送同一批 |
 | Banaverse H3 停在 2% 很久 | 雲端排隊 | 正常，20 分鐘以上也發生過；先做旁白與 assemble 腳本，不要一直輪詢 |
 | 角色身上有白色破片、爆星、速度線 | 模型自己加裝飾 | 換 Omni Flash ＋ prompt 寫元件清單與禁止新增 |
 | 字蓋住角色的臉 | 角色往上跑進字區 | prompt 鎖住角色高度與「不得跳起」；該段盡量完全不貼疊層 |

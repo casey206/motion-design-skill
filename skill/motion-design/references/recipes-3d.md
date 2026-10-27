@@ -310,7 +310,7 @@ No people anywhere in frame. No real city skyline, no map data, no real brands.
 
 `minimax_h3` 是生成式的，鏡頭路徑無法精準控制。若客戶要**指定的相機路徑、精確的尺寸、可重複的改版**，改走真幾何：
 
-- Higgsfield 的 `scene_builder_3d_*`：create_project → search_assets／import_asset → run_python 排場景與打光 → get_glb／get_blend
+- 3D 場景建構類 MCP：建立專案 → 匯入素材 → 用 Python 排場景與打光 → 匯出 glb／blend
 - 本機 Blender MCP
 
 算出 viewport 序列後，把成果當 `start_image`／`image_references` 交給 H3 做質感與動態。
